@@ -8,7 +8,6 @@ root.iconbitmap()
 
 e = Entry(root, width=80, borderwidth=5, bg="white", fg="black")
 e.pack()
-# url = e.insert(0, "Enter Lazada PH URL here: ")
 
 def myClick():
     url = e.get()
@@ -24,8 +23,5 @@ def myClick():
 
 myButton = Button(root, text="Get Price", command=myClick, fg="black", bg="white")
 myButton.pack()
-
-
-# price.grid(row=5, column=5)
 
 root.mainloop()
