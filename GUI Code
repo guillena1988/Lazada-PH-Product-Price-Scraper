@@ -3,31 +3,29 @@ import requests
 from tkinter import *
 
 root = Tk()
-root.title('Get the Product Price from Lazada PH')
+root.title('Get the Product Price from Lazada Philippines')
 root.iconbitmap()
 
-#url = "https://www.lazada.com.ph/products/get-it-first-oppo-reno8-5g-dual-sony-imx709-sensors-32mp-selfie-cam-80w-supervooc-smartphone-i3280996915-s16577165434.html?spm=a2o4l.pdp_revamp.recommend_2.6.a0832007kHblKn&mp=1&cid=101100018598092&mp=1&impsrc=&ad_src=1110_1201:157.924624&pid_pvid=f2db722437574d01e7f327b50c76bd59&sub_product_id=F&pvtime=1662635388&member_id=151500765&mp=1&cpc=573&originalCpc=700&highest_price=700&adFlag=3&pdp_item=3208723439&pa=sponsored_bottom&did=8cd3045e-fd78-434a-9138-2eb91fd3494a&adid=0&bucketId=0&sellerId=100138602&itemId=3280996915&ncid=101100018598092&adgroup_id=739734021&creative_id=2059208451&brand_id=3594&category_id=5121&pvid=8cd3045e-fd78-434a-9138-2eb91fd3494a&abid=0,13242120,237633,12786048,12656138,12449264,12773908,13058896,11989614,12189920,15236790,12518112,16112618,12192858,12345564,12950436,16719836,195686,16719834,17598570,240363,12559250,13485024,10910152,12900842,12575182,12575244,14620714,12729396,8460342,12346180,16853112,13296944,12793016,13198514,12091908&nick=&pos=-1&regional_key=300300005086&impsrc=&crowd_id=&one_id=&"
-
-e = Entry(root, width=50, borderwidth=10, bg="white", fg="black")
+e = Entry(root, width=80, borderwidth=5, bg="white", fg="black")
 e.pack()
-#url = e.insert(0, "Enter Lazada PH URL here: ")
-
-show_price = ""
+# url = e.insert(0, "Enter Lazada PH URL here: ")
 
 def myClick():
-    global show_price
     url = e.get()
     result = requests.get(url)
     doc = BeautifulSoup(result.text, "html.parser")
+    #prices = doc.find('div', class_="pdp-product-price")
     prices = doc.find('div', class_="pdp-product-price")
-    show_price = prices.string
-    print(show_price)
+    show_price = prices.span.text
+    product_name = doc.find("h1", class_="pdp-mod-product-badge-title")
+    show_name = product_name.string
+    price = Label(root, text="\n The Price for \n" + show_name + "\n is " + str(show_price), font=("Calibri", 8))
+    price.pack()
 
 myButton = Button(root, text="Get Price", command=myClick, fg="black", bg="white")
 myButton.pack()
 
-price = Label(root, text="The price is: " + show_price, font=("Arial Bold", 20))
-price.pack()
-#price.grid(row=5, column=5)
+
+# price.grid(row=5, column=5)
 
 root.mainloop()
