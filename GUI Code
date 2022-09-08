@@ -13,7 +13,6 @@ def myClick():
     url = e.get()
     result = requests.get(url)
     doc = BeautifulSoup(result.text, "html.parser")
-    #prices = doc.find('div', class_="pdp-product-price")
     prices = doc.find('div', class_="pdp-product-price")
     show_price = prices.span.text
     product_name = doc.find("h1", class_="pdp-mod-product-badge-title")
